@@ -15,6 +15,8 @@ export const Route = createFileRoute("/admin")({
 const SUPABASE_URL = "https://usztvmemsyttwkrkaoim.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzenR2bWVtc3l0dHdrcmthb2ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1ODkwOTQsImV4cCI6MjA5NTE2NTA5NH0.Yw8cDSMgxX-1MiOa8jfr1MqDWD45-VjSrKqbSvhN2fw";
+const SUPABASE_SERVICE_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzenR2bWVtc3l0dHdrcmthb2ltIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTU4OTA5NCwiZXhwIjoyMDk1MTY1MDk0fQ.K3b5V65QRhMBUlVdqR3EvxWgEwNkFD4_MW3lBUiW6Wc";
 const ADMIN_PASSWORD = "routehealth2026";
 const JITSI_ROOM = "https://meet.jit.si/RouteHealthDemo2026";
 
@@ -33,6 +35,7 @@ interface Conversation {
 interface ConsultRequest {
   id: string;
   created_at: string;
+  telegram_chat_id: number;
   category: string;
   user_message: string;
   status: string;
@@ -77,6 +80,29 @@ function AdminPage() {
   const [consults, setConsults] = useState<ConsultRequest[]>([]);
   const [live, setLive] = useState(false);
   const [selected, setSelected] = useState<Conversation | null>(null);
+  const [completing, setCompleting] = useState<string | null>(null);
+
+  const markComplete = async (id: string) => {
+    setCompleting(id);
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/consult_requests?id=eq.${id}`, {
+        method: "PATCH",
+        headers: {
+          apikey: SUPABASE_SERVICE_KEY,
+          Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal",
+        },
+        body: JSON.stringify({ status: "completed" }),
+      });
+      // Optimistic local update
+      setConsults(prev => prev.map(c => c.id === id ? { ...c, status: "completed" } : c));
+    } catch (e) {
+      console.error("markComplete failed", e);
+    } finally {
+      setCompleting(null);
+    }
+  };
 
   useEffect(() => {
     if (!authed) return;
@@ -229,15 +255,24 @@ function AdminPage() {
                     </div>
                     <p className="text-sm text-foreground truncate max-w-lg">{c.user_message}</p>
                   </div>
-                  <a
-                    href={c.room_url ?? JITSI_ROOM}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-4 shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-semibold text-black transition-opacity hover:opacity-90"
-                  >
-                    <Video className="h-3.5 w-3.5" />
-                    Join call
-                  </a>
+                  <div className="ml-4 shrink-0 flex items-center gap-2">
+                    <a
+                      href={c.room_url ?? JITSI_ROOM}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-semibold text-black transition-opacity hover:opacity-90"
+                    >
+                      <Video className="h-3.5 w-3.5" />
+                      Join call
+                    </a>
+                    <button
+                      onClick={() => markComplete(c.id)}
+                      disabled={completing === c.id}
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-white/10 disabled:opacity-50"
+                    >
+                      {completing === c.id ? "Marking…" : "✓ Mark complete"}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -354,10 +389,21 @@ function AdminPage() {
                         </span>
                       </td>
                       <td className="px-5 py-3">
-                        <a href={c.room_url ?? JITSI_ROOM} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                          <Video className="h-3 w-3" /> Join
-                        </a>
+                        <div className="flex items-center gap-3">
+                          <a href={c.room_url ?? JITSI_ROOM} target="_blank" rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                            <Video className="h-3 w-3" /> Join
+                          </a>
+                          {c.status === "pending" && (
+                            <button
+                              onClick={() => markComplete(c.id)}
+                              disabled={completing === c.id}
+                              className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors disabled:opacity-50"
+                            >
+                              {completing === c.id ? "…" : "✓ Done"}
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))}
