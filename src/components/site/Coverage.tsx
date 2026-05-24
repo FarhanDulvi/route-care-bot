@@ -69,7 +69,7 @@ export function Coverage() {
         </div>
 
         {/* Provider coverage grid */}
-        <div className="mt-8 rounded-2xl border border-white/10 bg-[#05070d] p-5">
+        <div className="mt-8 rounded-2xl border border-border bg-secondary p-5">
           <p className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
             Demo provider configs
           </p>
@@ -84,7 +84,7 @@ export function Coverage() {
             ].map((p) => (
               <div
                 key={p.name}
-                className="rounded-xl border border-white/8 bg-white/[0.03] p-3"
+                className="rounded-xl border border-border bg-background p-3"
               >
                 <p className="text-[13px] font-medium text-foreground">{p.name}</p>
                 <p className="mt-0.5 text-[11px] text-muted-foreground">{p.type}</p>
