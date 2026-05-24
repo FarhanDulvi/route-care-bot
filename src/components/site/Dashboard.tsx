@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Clock, Wifi } from "lucide-react";
+import { Clock, Wifi, Video } from "lucide-react";
 import type { AppState } from "@/lib/routehealth-state";
 
 const SUPABASE_URL = "https://usztvmemsyttwkrkaoim.supabase.co";
@@ -15,6 +15,18 @@ interface Conversation {
   category: string;
   provider: string;
   bot_response: string;
+}
+
+const JITSI_ROOM = "https://meet.jit.si/RouteHealthDemo2026";
+
+interface ConsultRequest {
+  id: string;
+  created_at: string;
+  telegram_chat_id: number;
+  category: string;
+  user_message: string;
+  status: string;
+  room_url: string;
 }
 
 const PROVIDER_LABEL: Record<string, string> = {
@@ -51,6 +63,7 @@ export function Dashboard({ state }: { state: AppState }) {
   const counterRef = useRef<HTMLSpanElement>(null);
   const prevCounter = useRef(state.counter);
   const [convos, setConvos] = useState<Conversation[]>([]);
+  const [consults, setConsults] = useState<ConsultRequest[]>([]);
   const [live, setLive] = useState(false);
   const [lastFetch, setLastFetch] = useState<Date | null>(null);
 
@@ -66,20 +79,18 @@ export function Dashboard({ state }: { state: AppState }) {
 
   // Poll Supabase every 5s
   useEffect(() => {
-    const fetchConvos = async () => {
+    const fetchAll = async () => {
       try {
-        const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/rh_conversations?order=created_at.desc&limit=10`,
-          {
-            headers: {
-              apikey: SUPABASE_ANON_KEY,
-              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-            },
-          }
-        );
-        if (!res.ok) return;
-        const data: Conversation[] = await res.json();
-        setConvos(data);
+        const headers = {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        };
+        const [convRes, consultRes] = await Promise.all([
+          fetch(`${SUPABASE_URL}/rest/v1/rh_conversations?order=created_at.desc&limit=10`, { headers }),
+          fetch(`${SUPABASE_URL}/rest/v1/consult_requests?order=created_at.desc&limit=5`, { headers }),
+        ]);
+        if (convRes.ok) setConvos(await convRes.json());
+        if (consultRes.ok) setConsults(await consultRes.json());
         setLive(true);
         setLastFetch(new Date());
       } catch {
@@ -87,8 +98,8 @@ export function Dashboard({ state }: { state: AppState }) {
       }
     };
 
-    fetchConvos();
-    const interval = setInterval(fetchConvos, 5000);
+    fetchAll();
+    const interval = setInterval(fetchAll, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -205,6 +216,53 @@ export function Dashboard({ state }: { state: AppState }) {
             )}
           </div>
         </div>
+
+        {/* Live consult requests */}
+        {consults.length > 0 && (
+          <div className="mt-8 panel overflow-hidden border-emerald-500/20">
+            <div className="flex items-center justify-between border-b border-white/5 px-6 py-4">
+              <div className="flex items-center gap-2">
+                <Video className="h-4 w-4 text-emerald-400" />
+                <h3 className="text-sm font-semibold text-foreground">Live consult requests</h3>
+              </div>
+              <span className="flex items-center gap-1.5 text-xs text-emerald-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                {consults.filter(c => c.status === "pending").length} pending
+              </span>
+            </div>
+            <div className="divide-y divide-white/5">
+              {consults.map((c) => (
+                <div key={c.id} className="flex items-center justify-between px-6 py-4">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                        c.status === "pending"
+                          ? "bg-amber-500/15 text-amber-400"
+                          : "bg-emerald-500/15 text-emerald-400"
+                      }`}>
+                        {c.status}
+                      </span>
+                      <span className="text-xs text-muted-foreground">{timeAgo(c.created_at)}</span>
+                      <span className="text-xs text-muted-foreground capitalize">{c.category.replace("_", " ")}</span>
+                    </div>
+                    <p className="mt-1 truncate text-sm text-foreground max-w-md" title={c.user_message}>
+                      {c.user_message}
+                    </p>
+                  </div>
+                  <a
+                    href={c.room_url ?? JITSI_ROOM}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-4 shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-emerald-500 px-3 py-1.5 text-xs font-semibold text-black transition-opacity hover:opacity-90"
+                  >
+                    <Video className="h-3 w-3" />
+                    Join call
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="panel p-6">
