@@ -15,8 +15,6 @@ export const Route = createFileRoute("/admin")({
 const SUPABASE_URL = "https://usztvmemsyttwkrkaoim.supabase.co";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzenR2bWVtc3l0dHdrcmthb2ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1ODkwOTQsImV4cCI6MjA5NTE2NTA5NH0.Yw8cDSMgxX-1MiOa8jfr1MqDWD45-VjSrKqbSvhN2fw";
-const SUPABASE_SERVICE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzenR2bWVtc3l0dHdrcmthb2ltIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTU4OTA5NCwiZXhwIjoyMDk1MTY1MDk0fQ.K3b5V65QRhMBUlVdqR3EvxWgEwNkFD4_MW3lBUiW6Wc";
 const ADMIN_PASSWORD = "routehealth2026";
 const JITSI_ROOM = "https://meet.jit.si/RouteHealthDemo2026";
 
@@ -88,8 +86,8 @@ function AdminPage() {
       await fetch(`${SUPABASE_URL}/rest/v1/consult_requests?id=eq.${id}`, {
         method: "PATCH",
         headers: {
-          apikey: SUPABASE_SERVICE_KEY,
-          Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
           "Content-Type": "application/json",
           Prefer: "return=minimal",
         },
