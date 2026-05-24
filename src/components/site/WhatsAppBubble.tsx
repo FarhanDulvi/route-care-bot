@@ -17,7 +17,7 @@ function Ticks() {
 
 function Time({ outgoing }: { outgoing?: boolean }) {
   return (
-    <span className="ml-2 inline-flex items-center text-[10px] text-[#667781]">
+    <span className="ml-2 inline-flex items-center text-[10px] text-[#aac9e0] opacity-70">
       {timeString()}
       {outgoing && <Ticks />}
     </span>
@@ -40,8 +40,10 @@ export function WhatsAppBubble({ bubble }: { bubble: Bubble }) {
     >
       <div
         className={`relative max-w-[78%] rounded-lg px-2.5 py-1.5 shadow-sm ${
-          outgoing ? "bg-[#ffffff] text-[#111b21]" : "bg-[#d9fdd3] text-[#111b21]"
-        } ${emergency ? "border-l-4 border-[#dc2626]" : ""}`}
+          outgoing
+            ? "bg-[#212d3b] text-[#e2e8f0]"
+            : "bg-[#2b5278] text-[#ffffff]"
+        } ${emergency ? "border-l-4 border-[#ef4444]" : ""}`}
         style={{
           borderTopLeftRadius: outgoing ? 2 : 8,
           borderTopRightRadius: outgoing ? 8 : 2,
@@ -52,8 +54,8 @@ export function WhatsAppBubble({ bubble }: { bubble: Bubble }) {
         ) : (
           <p
             className={`whitespace-pre-wrap break-words text-[13.5px] leading-snug ${
-              muted ? "italic text-[#667781]" : ""
-            } ${emergency ? "font-semibold text-[#7f1d1d]" : ""}`}
+              muted ? "italic opacity-60" : ""
+            } ${emergency ? "font-semibold text-[#fca5a5]" : ""}`}
           >
             {bubble.text}
             <Time outgoing={outgoing} />
@@ -70,7 +72,7 @@ function VoiceBubble({ duration, transcript }: { duration: string; transcript: s
       <div className="flex items-center gap-2 py-1">
         <button
           type="button"
-          className="grid h-7 w-7 place-items-center rounded-full bg-[#00a884] text-white"
+          className="grid h-7 w-7 place-items-center rounded-full bg-[#2b5278] text-white"
           aria-label="play voice note"
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
@@ -88,14 +90,14 @@ function VoiceBubble({ duration, transcript }: { duration: string; transcript: s
                 width="2"
                 height={h}
                 rx="1"
-                fill="#667781"
+                fill="#53bdeb"
               />
             );
           })}
         </svg>
-        <span className="text-[11px] text-[#667781]">{duration}</span>
+        <span className="text-[11px] text-[#aac9e0]">{duration}</span>
       </div>
-      <p className="mt-1 border-t border-[#e9edef] pt-1 text-[11px] italic text-[#667781]">
+      <p className="mt-1 border-t border-white/10 pt-1 text-[11px] italic text-[#aac9e0]">
         transcribed: {transcript}
         <Time outgoing={false} />
       </p>
@@ -128,7 +130,7 @@ export function ActionCardBubble({
   return (
     <div className="flex w-full animate-bubble-in justify-start">
       <div
-        className="w-[78%] overflow-hidden rounded-lg bg-white text-[#111b21] shadow-sm"
+        className="w-[78%] overflow-hidden rounded-lg bg-[#212d3b] text-[#e2e8f0] shadow-sm"
         style={{ borderTopLeftRadius: 2 }}
       >
         <button
@@ -139,7 +141,7 @@ export function ActionCardBubble({
           {label}
         </button>
         <div className="px-3 py-1.5 text-right">
-          <span className="text-[10px] text-[#667781]">{timeString()}</span>
+          <span className="text-[10px] text-[#aac9e0] opacity-70">{timeString()}</span>
         </div>
       </div>
     </div>

@@ -82,8 +82,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "RouteHealth — Benefits concierge for Malaysian SMEs" },
       { name: "twitter:description", content: "Routes sick employees to the cheapest covered care, instantly. Patient Journey Automation for Malaysian SMEs." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/439b7501-1ef7-4990-b5e5-e9c345d6ad10/id-preview-75fb4b41--5a541798-cf09-4822-90c8-1728859b254b.lovable.app-1779588585267.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/439b7501-1ef7-4990-b5e5-e9c345d6ad10/id-preview-75fb4b41--5a541798-cf09-4822-90c8-1728859b254b.lovable.app-1779588585267.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

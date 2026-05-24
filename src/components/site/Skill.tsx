@@ -3,14 +3,15 @@ export function Skill() {
     <section id="skill" className="px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-          OpenClaw skill
+          Provider config
         </p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          One skill. Every provider.
+          One config. Every provider.
         </h2>
         <p className="mt-4 max-w-2xl text-muted-foreground">
-          RouteHealth is a portable OpenClaw skill. Add a provider with one
-          config file. No code changes.
+          Add a provider with one JSON file. No code changes. RouteHealth reads
+          the config and knows exactly what is covered, what it costs, and when
+          to route.
         </p>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
@@ -25,10 +26,10 @@ export function Skill() {
             </div>
             <p>
               <span className="text-accent">$</span>{" "}
-              <span className="text-[#e2e8f0]">clawdbot skill install routehealth</span>
+              <span className="text-[#e2e8f0]">rh provider add doctor_anywhere</span>
             </p>
-            <p className="mt-2 text-[#64748b]">resolving skill...</p>
-            <p className="text-[#86efac]">✓ routehealth@1.0.0 installed</p>
+            <p className="mt-2 text-[#64748b]">resolving config...</p>
+            <p className="text-[#86efac]">✓ doctor_anywhere@1.0.0 loaded</p>
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-[#05070d] p-5 font-mono text-[13px] leading-relaxed">

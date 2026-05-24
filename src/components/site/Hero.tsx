@@ -14,8 +14,8 @@ export function Hero() {
             Your employees forget the benefit exists. We fix that.
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            RouteHealth is a WhatsApp concierge that routes sick employees to the
-            cheapest covered care, instantly. It navigates — it never diagnoses.
+            RouteHealth is a Telegram concierge that routes sick employees to the
+            right covered care, instantly. It navigates — it never diagnoses.
             Built for Malaysian SMEs.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -41,21 +41,21 @@ export function Hero() {
           <div className="panel space-y-2 p-4">
             <div className="flex justify-end">
               <div
-                className="max-w-[85%] rounded-lg bg-[#d9fdd3] px-2.5 py-1.5 text-[13.5px] text-[#111b21] shadow-sm"
+                className="max-w-[85%] rounded-lg bg-[#2b5278] px-2.5 py-1.5 text-[13.5px] text-white shadow-sm"
                 style={{ borderTopRightRadius: 2 }}
               >
                 ada panel clinic dekat ofis tak?
-                <span className="ml-2 text-[10px] text-[#667781]">09:12</span>
+                <span className="ml-2 text-[10px] text-[#aac9e0] opacity-70">09:12</span>
               </div>
             </div>
             <div className="flex justify-start">
               <div
-                className="max-w-[85%] rounded-lg bg-white px-2.5 py-1.5 text-[13.5px] text-[#111b21] shadow-sm"
+                className="max-w-[85%] rounded-lg bg-[#212d3b] px-2.5 py-1.5 text-[13.5px] text-[#e2e8f0] shadow-sm"
                 style={{ borderTopLeftRadius: 2 }}
               >
                 Yes. Klinik Chew Wangsa Maju, 1.2 km, fully covered by your DA
                 Corporate plan. Tap to consult.
-                <span className="ml-2 text-[10px] text-[#667781]">09:12</span>
+                <span className="ml-2 text-[10px] text-[#aac9e0] opacity-70">09:12</span>
               </div>
             </div>
           </div>

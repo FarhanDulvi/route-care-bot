@@ -182,7 +182,7 @@ export function Demo({ dispatch }: Props) {
           <div className="order-2 lg:order-1">
             <PhoneFrame>
               <ChatHeader />
-              <div className="min-h-[520px] space-y-2 bg-[#0b141a] px-3 py-4">
+              <div className="min-h-[520px] space-y-2 bg-[#0e1621] px-3 py-4">
                 {items.length === 0 && (
                   <p className="mt-20 text-center text-xs text-[#8696a0]">
                     {activeScenario

@@ -9,10 +9,9 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = [
+  const anchorLinks = [
     { href: "#problem", label: "Problem" },
     { href: "#demo", label: "Demo" },
-    { href: "#dashboard", label: "Dashboard" },
     { href: "#coverage", label: "Coverage" },
   ];
 
@@ -35,7 +34,7 @@ export function Nav() {
           </span>
         </a>
         <ul className="flex items-center gap-1 text-sm sm:gap-2">
-          {links.map((l) => (
+          {anchorLinks.map((l) => (
             <li key={l.href}>
               <a
                 href={l.href}
@@ -45,6 +44,14 @@ export function Nav() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href="/admin"
+              className="rounded-md px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:px-3"
+            >
+              Admin ↗
+            </a>
+          </li>
         </ul>
       </nav>
     </header>
