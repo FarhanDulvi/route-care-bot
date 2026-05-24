@@ -56,7 +56,9 @@ export function Nav() {
           </li>
           <li>
             <a
-              href="#demo"
+              href="https://t.me/healthroute_bot"
+              target="_blank"
+              rel="noopener noreferrer"
               className="ml-1 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
             >
               Try the demo
