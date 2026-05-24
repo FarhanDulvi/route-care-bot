@@ -19,18 +19,20 @@ export function Nav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "backdrop-blur-xl bg-background/70 border-b border-white/5"
+          ? "backdrop-blur-xl bg-background/80 border-b border-border shadow-[0_1px_0_rgba(13,27,42,0.04)]"
           : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
         <a href="#top" className="flex items-center gap-2">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-[13px] font-bold text-primary-foreground">
+            R
+          </span>
           <span className="text-base font-semibold tracking-tight text-foreground">
             RouteHealth
           </span>
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
           <span className="hidden text-xs text-muted-foreground sm:inline">
-            benefits concierge
+            · benefits concierge
           </span>
         </a>
         <ul className="flex items-center gap-1 text-sm sm:gap-2">
@@ -38,18 +40,26 @@ export function Nav() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="rounded-md px-2.5 py-1.5 text-muted-foreground transition-colors hover:text-foreground sm:px-3"
+                className="rounded-md px-2.5 py-1.5 font-medium text-muted-foreground transition-colors hover:text-foreground sm:px-3"
               >
                 {l.label}
               </a>
             </li>
           ))}
-          <li>
+          <li className="hidden sm:block">
             <a
               href="/admin"
-              className="rounded-md px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:px-3"
+              className="rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               Admin ↗
+            </a>
+          </li>
+          <li>
+            <a
+              href="#demo"
+              className="ml-1 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
+            >
+              Try the demo
             </a>
           </li>
         </ul>
