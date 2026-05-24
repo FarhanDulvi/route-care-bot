@@ -21,7 +21,7 @@ export function Hero() {
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <a
-              href="https://t.me/healthroute_bot"
+              href="https://t.me/routehealth_bot"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 sm:text-lg"
