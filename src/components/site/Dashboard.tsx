@@ -1,20 +1,96 @@
-import { useEffect, useRef } from "react";
-import { Clock } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Clock, Wifi } from "lucide-react";
 import type { AppState } from "@/lib/routehealth-state";
+
+const SUPABASE_URL = "https://usztvmemsyttwkrkaoim.supabase.co";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzenR2bWVtc3l0dHdrcmthb2ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1ODkwOTQsImV4cCI6MjA5NTE2NTA5NH0.Yw8cDSMgxX-1MiOa8jfr1MqDWD45-VjSrKqbSvhN2fw";
+
+interface Conversation {
+  id: string;
+  created_at: string;
+  input_type: string;
+  language: string;
+  user_message: string;
+  category: string;
+  provider: string;
+  bot_response: string;
+}
+
+const PROVIDER_LABEL: Record<string, string> = {
+  doctor_anywhere: "Doctor Anywhere",
+  angsana: "Angsana Panel",
+  none: "—",
+};
+
+const CATEGORY_LABEL: Record<string, string> = {
+  gp: "GP / Fever",
+  dental: "Dental",
+  mental_health: "Mental Health",
+  emergency: "Emergency",
+  unclear: "Unclear",
+};
+
+const LANG_FLAG: Record<string, string> = {
+  en: "🇬🇧",
+  ms: "🇲🇾",
+  zh: "🇨🇳",
+  yue: "🀄",
+  ta: "🇮🇳",
+  fr: "🇫🇷",
+};
+
+function timeAgo(iso: string) {
+  const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+  if (diff < 60) return `${diff}s ago`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  return `${Math.floor(diff / 3600)}h ago`;
+}
 
 export function Dashboard({ state }: { state: AppState }) {
   const counterRef = useRef<HTMLSpanElement>(null);
   const prevCounter = useRef(state.counter);
+  const [convos, setConvos] = useState<Conversation[]>([]);
+  const [live, setLive] = useState(false);
+  const [lastFetch, setLastFetch] = useState<Date | null>(null);
 
+  // Animate counter on change
   useEffect(() => {
     if (state.counter !== prevCounter.current && counterRef.current) {
       counterRef.current.classList.remove("animate-pulse-once");
-      // force reflow
       void counterRef.current.offsetWidth;
       counterRef.current.classList.add("animate-pulse-once");
       prevCounter.current = state.counter;
     }
   }, [state.counter]);
+
+  // Poll Supabase every 5s
+  useEffect(() => {
+    const fetchConvos = async () => {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/rh_conversations?order=created_at.desc&limit=10`,
+          {
+            headers: {
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+          }
+        );
+        if (!res.ok) return;
+        const data: Conversation[] = await res.json();
+        setConvos(data);
+        setLive(true);
+        setLastFetch(new Date());
+      } catch {
+        setLive(false);
+      }
+    };
+
+    fetchConvos();
+    const interval = setInterval(fetchConvos, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const proactive = [
     "Mon 08:00, weekly check-ins, 12 employees",
@@ -25,53 +101,108 @@ export function Dashboard({ state }: { state: AppState }) {
   return (
     <section id="dashboard" className="px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
-        <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          TechMakers SB, this week
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            TechMakers SB, live
+          </h2>
+          <div className="flex items-center gap-2 text-xs">
+            <Wifi className={`h-3.5 w-3.5 ${live ? "text-emerald-400" : "text-muted-foreground"}`} />
+            <span className={live ? "text-emerald-400" : "text-muted-foreground"}>
+              {live ? `Live · ${lastFetch ? timeAgo(lastFetch.toISOString()) : ""}` : "Connecting…"}
+            </span>
+          </div>
+        </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           <StatCard label="Consults routed">
             <span ref={counterRef} className="inline-block">
-              {state.counter}
+              {convos.length > 0 ? convos.length : state.counter}
             </span>
           </StatCard>
-          <StatCard label="Estimated saved">RM {state.savings}</StatCard>
+          <StatCard label="Estimated saved">
+            RM {convos.length > 0 ? convos.length * 35 : state.savings}
+          </StatCard>
           <StatCard label="Top route">
-            <span className="text-2xl">DA video</span>
-            <span className="ml-2 text-sm text-muted-foreground">(4 of 7)</span>
+            {convos.length > 0 ? (
+              (() => {
+                const counts: Record<string, number> = {};
+                convos.forEach((c) => { counts[c.provider] = (counts[c.provider] || 0) + 1; });
+                const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+                return (
+                  <>
+                    <span className="text-2xl">{PROVIDER_LABEL[top[0]] ?? top[0]}</span>
+                    <span className="ml-2 text-sm text-muted-foreground">({top[1]} of {convos.length})</span>
+                  </>
+                );
+              })()
+            ) : (
+              <>
+                <span className="text-2xl">DA video</span>
+                <span className="ml-2 text-sm text-muted-foreground">(4 of 7)</span>
+              </>
+            )}
           </StatCard>
         </div>
 
+        {/* Live feed from Telegram bot */}
         <div className="mt-8 panel overflow-hidden">
-          <div className="border-b border-white/5 px-6 py-4">
-            <h3 className="text-sm font-semibold text-foreground">Recent events</h3>
+          <div className="flex items-center justify-between border-b border-white/5 px-6 py-4">
+            <h3 className="text-sm font-semibold text-foreground">Live from Telegram</h3>
+            {live && convos.length > 0 && (
+              <span className="flex items-center gap-1.5 text-xs text-emerald-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                {convos.length} interaction{convos.length !== 1 ? "s" : ""}
+              </span>
+            )}
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-sm">
-              <thead>
-                <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
-                  <th className="px-6 py-3 font-medium">Time</th>
-                  <th className="px-6 py-3 font-medium">Employee</th>
-                  <th className="px-6 py-3 font-medium">Need</th>
-                  <th className="px-6 py-3 font-medium">Route</th>
-                  <th className="px-6 py-3 font-medium">Provider</th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.events.map((e, i) => (
-                  <tr
-                    key={`${e.time}-${e.employee}-${i}`}
-                    className="border-t border-white/5 transition-colors hover:bg-white/[0.02]"
-                  >
-                    <td className="px-6 py-3 text-muted-foreground">{e.time}</td>
-                    <td className="px-6 py-3 font-mono text-xs text-foreground">{e.employee}</td>
-                    <td className="px-6 py-3 text-foreground">{e.need}</td>
-                    <td className="px-6 py-3 text-foreground">{e.route}</td>
-                    <td className="px-6 py-3 text-muted-foreground">{e.provider}</td>
+            {convos.length === 0 ? (
+              <div className="px-6 py-10 text-center text-sm text-muted-foreground">
+                {live
+                  ? "No interactions yet. Send a message to t.me/routehealth_bot to see it appear here."
+                  : "Connecting to live feed…"}
+              </div>
+            ) : (
+              <table className="w-full min-w-[640px] text-sm">
+                <thead>
+                  <tr className="text-left text-xs uppercase tracking-wider text-muted-foreground">
+                    <th className="px-6 py-3 font-medium">Time</th>
+                    <th className="px-6 py-3 font-medium">Input</th>
+                    <th className="px-6 py-3 font-medium">Lang</th>
+                    <th className="px-6 py-3 font-medium">Message</th>
+                    <th className="px-6 py-3 font-medium">Category</th>
+                    <th className="px-6 py-3 font-medium">Routed to</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {convos.map((c) => (
+                    <tr
+                      key={c.id}
+                      className="border-t border-white/5 transition-colors hover:bg-white/[0.02]"
+                    >
+                      <td className="px-6 py-3 text-muted-foreground whitespace-nowrap">
+                        {timeAgo(c.created_at)}
+                      </td>
+                      <td className="px-6 py-3 text-muted-foreground">
+                        {c.input_type === "voice" ? "🎙️" : "💬"}
+                      </td>
+                      <td className="px-6 py-3">
+                        {LANG_FLAG[c.language] ?? c.language}
+                      </td>
+                      <td className="px-6 py-3 text-foreground max-w-[240px] truncate" title={c.user_message}>
+                        {c.user_message}
+                      </td>
+                      <td className="px-6 py-3 text-foreground">
+                        {CATEGORY_LABEL[c.category] ?? c.category}
+                      </td>
+                      <td className="px-6 py-3 text-muted-foreground">
+                        {PROVIDER_LABEL[c.provider] ?? c.provider}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
 
