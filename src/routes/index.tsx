@@ -39,7 +39,7 @@ function Index() {
       <Nav />
       <main>
         <Hero />
-        <Problem />
+        
         <Onboarding />
         <Demo dispatch={dispatch} />
         <Coverage />
