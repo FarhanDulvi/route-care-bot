@@ -10,7 +10,6 @@ export function Nav() {
   }, []);
 
   const anchorLinks = [
-    { href: "#problem", label: "Problem" },
     { href: "#demo", label: "Demo" },
     { href: "#coverage", label: "Coverage" },
   ];
