@@ -13,7 +13,7 @@ export function Nav() {
     { href: "#problem", label: "Problem" },
     { href: "#demo", label: "Demo" },
     { href: "#dashboard", label: "Dashboard" },
-    { href: "#skill", label: "Skill" },
+    { href: "#coverage", label: "Coverage" },
   ];
 
   return (
@@ -31,7 +31,7 @@ export function Nav() {
           </span>
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
           <span className="hidden text-xs text-muted-foreground sm:inline">
-            an OpenClaw skill
+            benefits concierge
           </span>
         </a>
         <ul className="flex items-center gap-1 text-sm sm:gap-2">

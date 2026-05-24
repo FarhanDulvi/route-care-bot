@@ -45,6 +45,52 @@ export function Demo({ dispatch }: Props) {
     setLogLines([]);
     setRunKey((k) => k + 1);
 
+    // For proactive scenarios, bot fires first
+    if (scenario.proactiveOpener) {
+      // 0) bot opener at 600ms — bot initiates
+      after(600, () => {
+        setItems([{ kind: "bubble", bubble: scenario.proactiveOpener!, key: "opener" }]);
+      });
+
+      // 1) employee reply at 2.4s
+      after(2400, () => {
+        setItems((prev) => [...prev, { kind: "bubble", bubble: scenario.employee, key: "emp" }]);
+      });
+
+      // 2) gateway log after employee reply
+      const logStartDelay = 2900;
+      after(logStartDelay, () => setLogLines(scenario.log));
+
+      const logDuration = scenario.log.length * 650 + 200;
+      const typingStart = logStartDelay + logDuration;
+      after(typingStart, () => {
+        setItems((prev) => [...prev, { kind: "typing", key: "typing" }]);
+      });
+
+      const botStart = typingStart + 1400;
+      after(botStart, () => {
+        setItems((prev) => prev.filter((x) => x.kind !== "typing"));
+      });
+
+      scenario.bot.forEach((bubble, i) => {
+        after(botStart + i * 700, () => {
+          setItems((prev) => [...prev, { kind: "bubble", bubble, key: `bot-${i}` }]);
+        });
+      });
+
+      if (scenario.action) {
+        const actionAt = botStart + scenario.bot.length * 700 + 200;
+        after(actionAt, () => {
+          setItems((prev) => [
+            ...prev,
+            { kind: "action", label: scenario.action!.label, key: "action", consumed: false },
+          ]);
+        });
+      }
+      return;
+    }
+
+    // Standard (employee-initiated) flow
     // 1) employee bubble at ~1s
     after(900, () => {
       setItems([{ kind: "bubble", bubble: scenario.employee, key: "emp" }]);
@@ -110,7 +156,7 @@ export function Demo({ dispatch }: Props) {
           Watch a real conversation
         </h2>
         <p className="mt-3 text-muted-foreground">
-          Pick a scenario. The employee messages. The agent navigates.
+          Pick a scenario. The concierge discovers, routes, and follows up.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-2">

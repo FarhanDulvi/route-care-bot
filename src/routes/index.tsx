@@ -6,7 +6,7 @@ import { Problem } from "@/components/site/Problem";
 import { Onboarding } from "@/components/site/Onboarding";
 import { Demo } from "@/components/site/Demo";
 import { Dashboard } from "@/components/site/Dashboard";
-import { Skill } from "@/components/site/Skill";
+import { Coverage } from "@/components/site/Coverage";
 import { Footer } from "@/components/site/Footer";
 import { initialState, reducer } from "@/lib/routehealth-state";
 
@@ -18,13 +18,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "RouteHealth is a WhatsApp concierge that routes sick employees to the cheapest covered care, instantly. Built on OpenClaw for Malaysian SMEs.",
+          "RouteHealth is a WhatsApp concierge that routes sick employees to the cheapest covered care, instantly. Built for Malaysian SMEs.",
       },
       { property: "og:title", content: "RouteHealth — Benefits concierge on WhatsApp" },
       {
         property: "og:description",
         content:
-          "Routes sick employees to the cheapest covered care, instantly. An OpenClaw skill for Malaysian SMEs.",
+          "Routes sick employees to the cheapest covered care, instantly. Patient Journey Automation for Malaysian SMEs.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -44,7 +44,7 @@ function Index() {
         <Onboarding />
         <Demo dispatch={dispatch} />
         <Dashboard state={state} />
-        <Skill />
+        <Coverage />
       </main>
       <Footer />
     </div>

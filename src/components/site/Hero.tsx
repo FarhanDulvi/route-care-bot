@@ -8,14 +8,14 @@ export function Hero() {
       <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-            Built on OpenClaw
+            Vibeathon KL 2026 · Patient Journey Automation
           </p>
           <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             Your employees forget the benefit exists. We fix that.
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             RouteHealth is a WhatsApp concierge that routes sick employees to the
-            cheapest covered care, instantly. It navigates, it never diagnoses.
+            cheapest covered care, instantly. It navigates — it never diagnoses.
             Built for Malaysian SMEs.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -26,14 +26,14 @@ export function Hero() {
               Trigger live demo
             </a>
             <a
-              href="#skill"
+              href="#coverage"
               className="rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:border-white/30 hover:bg-white/5"
             >
-              View the skill
+              See coverage config
             </a>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            Demo data is synthetic. Vibeathon KL 2026. Two-person team.
+            Demo data is synthetic. Two-person team.
           </p>
         </div>
 
