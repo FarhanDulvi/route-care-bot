@@ -49,7 +49,9 @@ const SEVERITY_STYLE: Record<string, string> = {
 
 const LANG_FLAG: Record<string, string> = {
   en: "🇬🇧", ms: "🇲🇾", zh: "🇨🇳", yue: "🀄", ta: "🇮🇳",
-  fr: "🇫🇷", ar: "🇸🇦", ru: "🇷🇺", sw: "🇰🇪",
+  fr: "🇫🇷", ar: "🇸🇦", ru: "🇷🇺", sw: "🇰🇪", hi: "🇮🇳",
+  ur: "🇵🇰", id: "🇮🇩", tl: "🇵🇭", th: "🇹🇭", vi: "🇻🇳",
+  ja: "🇯🇵", ko: "🇰🇷", de: "🇩🇪", es: "🇪🇸", pt: "🇧🇷",
 };
 
 const PROVIDER_LABEL: Record<string, string> = {
@@ -70,6 +72,7 @@ function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [pw, setPw] = useState("");
   const [pwError, setPwError] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const [convos, setConvos] = useState<Conversation[]>([]);
   const [consults, setConsults] = useState<ConsultRequest[]>([]);
   const [live, setLive] = useState(false);
@@ -123,6 +126,20 @@ function AdminPage() {
             >
               Enter dashboard
             </button>
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => setShowHint(h => !h)}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+              >
+                Forgot password?
+              </button>
+              {showHint && (
+                <p className="mt-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 font-mono text-xs text-foreground">
+                  {ADMIN_PASSWORD}
+                </p>
+              )}
+            </div>
           </form>
         </div>
       </div>
