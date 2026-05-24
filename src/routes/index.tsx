@@ -1,26 +1,52 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useReducer } from "react";
+import { Nav } from "@/components/site/Nav";
+import { Hero } from "@/components/site/Hero";
+import { Problem } from "@/components/site/Problem";
+import { Onboarding } from "@/components/site/Onboarding";
+import { Demo } from "@/components/site/Demo";
+import { Dashboard } from "@/components/site/Dashboard";
+import { Skill } from "@/components/site/Skill";
+import { Footer } from "@/components/site/Footer";
+import { initialState, reducer } from "@/lib/routehealth-state";
 
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "RouteHealth — WhatsApp benefits concierge for Malaysian SMEs" },
+      {
+        name: "description",
+        content:
+          "RouteHealth is a WhatsApp concierge that routes sick employees to the cheapest covered care, instantly. Built on OpenClaw for Malaysian SMEs.",
+      },
+      { property: "og:title", content: "RouteHealth — Benefits concierge on WhatsApp" },
+      {
+        property: "og:description",
+        content:
+          "Routes sick employees to the cheapest covered care, instantly. An OpenClaw skill for Malaysian SMEs.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background text-foreground">
+      <Nav />
+      <main>
+        <Hero />
+        <Problem />
+        <Onboarding />
+        <Demo dispatch={dispatch} />
+        <Dashboard state={state} />
+        <Skill />
+      </main>
+      <Footer />
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
