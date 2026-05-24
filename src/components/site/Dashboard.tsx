@@ -18,6 +18,7 @@ interface Conversation {
 }
 
 const JITSI_ROOM = "https://meet.jit.si/RouteHealthDemo2026";
+const ADMIN_PASSWORD = "routehealth2026";
 
 interface ConsultRequest {
   id: string;
@@ -66,6 +67,9 @@ export function Dashboard({ state }: { state: AppState }) {
   const [consults, setConsults] = useState<ConsultRequest[]>([]);
   const [live, setLive] = useState(false);
   const [lastFetch, setLastFetch] = useState<Date | null>(null);
+  const [authed, setAuthed] = useState(false);
+  const [pwInput, setPwInput] = useState("");
+  const [pwError, setPwError] = useState(false);
 
   // Animate counter on change
   useEffect(() => {
@@ -103,11 +107,56 @@ export function Dashboard({ state }: { state: AppState }) {
     return () => clearInterval(interval);
   }, []);
 
+  function handleLogin(e: React.FormEvent) {
+    e.preventDefault();
+    if (pwInput === ADMIN_PASSWORD) {
+      setAuthed(true);
+      setPwError(false);
+    } else {
+      setPwError(true);
+    }
+  }
+
   const proactive = [
     "Mon 08:00, weekly check-ins, 12 employees",
     "Fri 17:00, owner summary",
     "7 days before renewal, reminder with usage stats",
   ];
+
+  if (!authed) {
+    return (
+      <section id="dashboard" className="px-4 py-24 sm:px-6">
+        <div className="mx-auto max-w-md">
+          <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+            Admin dashboard
+          </h2>
+          <p className="mt-3 text-muted-foreground text-sm">Doctor / operator access only.</p>
+          <form onSubmit={handleLogin} className="panel mt-8 p-6 space-y-4">
+            <label className="block">
+              <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Password</span>
+              <input
+                type="password"
+                value={pwInput}
+                onChange={e => setPwInput(e.target.value)}
+                placeholder="Enter admin password"
+                className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-foreground outline-none focus:border-primary/60"
+                autoFocus
+              />
+            </label>
+            {pwError && (
+              <p className="text-xs text-red-400">Incorrect password.</p>
+            )}
+            <button
+              type="submit"
+              className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              Enter dashboard
+            </button>
+          </form>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="dashboard" className="px-4 py-24 sm:px-6">
