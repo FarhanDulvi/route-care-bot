@@ -41,7 +41,7 @@ export function Onboarding() {
               defaultValue={PROVIDERS[0]}
             >
               {PROVIDERS.map((p) => (
-                <option key={p} value={p} className="bg-[#0f172a]">
+                <option key={p} value={p} className="bg-secondary">
                   {p}
                 </option>
               ))}
