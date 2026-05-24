@@ -1,6 +1,6 @@
 export function Skill() {
   return (
-    <section id="skill" className="px-4 py-24 sm:px-6">
+    <section id="skill" className="px-4 py-14 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
           Provider config
@@ -14,7 +14,7 @@ export function Skill() {
           to route.
         </p>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="rounded-2xl border border-white/10 bg-[#05070d] p-5 font-mono text-[13px]">
             <div className="mb-3 flex items-center gap-2 border-b border-white/5 pb-2">
               <span className="h-2 w-2 rounded-full bg-[#ef4444]" />

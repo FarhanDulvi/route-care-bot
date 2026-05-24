@@ -125,7 +125,7 @@ export function Dashboard({ state }: { state: AppState }) {
 
   if (!authed) {
     return (
-      <section id="dashboard" className="px-4 py-24 sm:px-6">
+      <section id="dashboard" className="px-4 py-14 sm:px-6 sm:py-16">
         <div className="mx-auto max-w-md">
           <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             Admin dashboard
@@ -159,7 +159,7 @@ export function Dashboard({ state }: { state: AppState }) {
   }
 
   return (
-    <section id="dashboard" className="px-4 py-24 sm:px-6">
+    <section id="dashboard" className="px-4 py-14 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-6xl">
         <div className="flex items-center justify-between">
           <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">

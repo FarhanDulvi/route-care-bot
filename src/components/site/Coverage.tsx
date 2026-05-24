@@ -1,6 +1,6 @@
 export function Coverage() {
   return (
-    <section id="coverage" className="px-4 py-24 sm:px-6">
+    <section id="coverage" className="px-4 py-14 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
           Provider network
@@ -14,7 +14,7 @@ export function Coverage() {
           network scales without touching application logic.
         </p>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-8 grid gap-6 lg:grid-cols-2">
           {/* Provider config */}
           <div className="rounded-2xl border border-white/10 bg-[#05070d] p-5 font-mono text-[13px] leading-relaxed">
             <div className="mb-3 flex items-center gap-2 border-b border-white/5 pb-2">

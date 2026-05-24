@@ -150,7 +150,7 @@ export function Demo({ dispatch }: Props) {
   const activeScenario = SCENARIOS.find((s) => s.id === activeId);
 
   return (
-    <section id="demo" className="px-4 py-24 sm:px-6">
+    <section id="demo" className="px-4 py-14 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-6xl">
         <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           Watch a real conversation
@@ -178,7 +178,7 @@ export function Demo({ dispatch }: Props) {
           })}
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+        <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
           <div className="order-2 lg:order-1">
             <PhoneFrame>
               <ChatHeader />

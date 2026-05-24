@@ -1,6 +1,6 @@
 export function Onboarding() {
   return (
-    <section id="story" className="px-4 py-24 sm:px-6">
+    <section id="story" className="px-4 py-14 sm:px-6 sm:py-16">
       <div className="mx-auto max-w-6xl">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
           Why we built RouteHealth
@@ -9,7 +9,7 @@ export function Onboarding() {
           The benefit exists. The employee never finds it in time.
         </h2>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 lg:grid-cols-3">
           {/* Problem */}
           <div className="panel p-6">
             <span className="inline-flex h-7 items-center rounded-full bg-destructive/10 px-3 text-[11px] font-semibold uppercase tracking-wider text-destructive">
@@ -107,7 +107,7 @@ export function Onboarding() {
         </div>
 
         {/* Impact strip */}
-        <div className="mt-10 grid gap-3 rounded-2xl border border-border bg-secondary p-6 sm:grid-cols-3 sm:p-8">
+        <div className="mt-8 grid gap-3 rounded-2xl border border-border bg-secondary p-6 sm:grid-cols-3 sm:p-8">
           <div>
             <p className="text-3xl font-semibold text-foreground">~RM 80</p>
             <p className="mt-1 text-sm text-muted-foreground">
