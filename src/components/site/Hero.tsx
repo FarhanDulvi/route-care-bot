@@ -2,38 +2,43 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-[88vh] items-center overflow-hidden px-4 pt-28 pb-16 sm:px-6"
+      className="relative flex min-h-[68vh] items-center overflow-hidden px-4 pt-24 pb-10 sm:px-6"
     >
       <div className="hero-glow pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-[1.15fr_1fr]">
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             Vibeathon KL 2026 · Patient Journey Automation
           </p>
-          <h1 className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-[3.6rem]">
+          <h1 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-[3.4rem]">
             Healthcare benefits, <span className="text-primary">anywhere</span> your team is.
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             RouteHealth is a Telegram concierge that routes sick employees to
-            the right covered care, instantly. It navigates — it never
+            the right covered care, instantly. It navigates, it never
             diagnoses. Built for Malaysian SMEs.
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            <a
+              href="https://t.me/healthroute_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 sm:text-lg"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
+              </svg>
+              Try on Telegram
+            </a>
             <a
               href="#demo"
-              className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
+              className="rounded-full bg-secondary px-6 py-4 text-base font-semibold text-foreground border border-border transition-all hover:bg-muted"
             >
-              Trigger live demo →
-            </a>
-            <a
-              href="#coverage"
-              className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-sm transition-all hover:bg-accent/90 hover:shadow-md"
-            >
-              See coverage config
+              See live demo
             </a>
           </div>
-          <p className="mt-4 text-xs text-muted-foreground">
+          <p className="mt-3 text-xs text-muted-foreground">
             Demo data is synthetic. Two-person team.
           </p>
         </div>
