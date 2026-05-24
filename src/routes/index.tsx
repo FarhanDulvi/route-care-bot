@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useReducer } from "react";
 import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
-import { Problem } from "@/components/site/Problem";
+
 import { Onboarding } from "@/components/site/Onboarding";
 import { Demo } from "@/components/site/Demo";
 import { Coverage } from "@/components/site/Coverage";
