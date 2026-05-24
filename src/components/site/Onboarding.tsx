@@ -62,7 +62,7 @@ export function Onboarding() {
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-70"
           >
             {status === "loading" && <Loader2 className="h-4 w-4 animate-spin" />}
-            {status === "loading" ? "Generating bot..." : "Generate WhatsApp bot"}
+            {status === "loading" ? "Loading demo..." : "Load demo config"}
           </button>
 
           {status === "done" && (
@@ -72,10 +72,10 @@ export function Onboarding() {
               </span>
               <div>
                 <p className="text-sm font-semibold text-foreground">
-                  Bot live at wa.me/60123ROUTE
+                  Demo config loaded — try it at t.me/routehealth_bot
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Share with your team. They can message it anytime.
+                  Open Telegram and send a voice note or message. The concierge responds instantly.
                 </p>
               </div>
             </div>

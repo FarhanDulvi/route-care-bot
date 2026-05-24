@@ -51,7 +51,7 @@ export function GatewayLog({ lines, runKey, charSpeed = 14, betweenLines = 180, 
         <span className="h-2 w-2 rounded-full bg-[#f59e0b]" />
         <span className="h-2 w-2 rounded-full bg-[#22c55e]" />
         <span className="ml-2 text-[11px] uppercase tracking-wider text-muted-foreground">
-          openclaw · gateway.log
+          routehealth · gateway.log
         </span>
       </div>
       <div className="flex-1 space-y-1 overflow-y-auto scrollbar-thin">

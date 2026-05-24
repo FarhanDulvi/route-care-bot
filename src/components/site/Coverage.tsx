@@ -71,7 +71,7 @@ export function Coverage() {
         {/* Provider coverage grid */}
         <div className="mt-8 rounded-2xl border border-white/10 bg-[#05070d] p-5">
           <p className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Currently integrated
+            Demo provider configs
           </p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {[
@@ -94,10 +94,9 @@ export function Coverage() {
         </div>
 
         <p className="mt-6 max-w-3xl text-sm text-muted-foreground">
-          The moat is the network and the routing data — not the code. RouteHealth
-          runs on the{" "}
-          <span className="text-foreground">OpenClaw</span> agent framework,
-          connected to Telegram for the demo and WhatsApp for production.
+          The moat is the network and the routing data — not the code. Adding a
+          provider is one JSON file. The concierge reads it at runtime. No
+          engineering work required.
         </p>
       </div>
     </section>
