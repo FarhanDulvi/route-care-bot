@@ -139,7 +139,7 @@ export function Dashboard({ state }: { state: AppState }) {
                 value={pwInput}
                 onChange={e => setPwInput(e.target.value)}
                 placeholder="Enter admin password"
-                className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-foreground outline-none focus:border-primary/60"
+                className="mt-1.5 w-full rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground outline-none focus:border-primary/60"
                 autoFocus
               />
             </label>
@@ -206,7 +206,7 @@ export function Dashboard({ state }: { state: AppState }) {
 
         {/* Live feed from Telegram bot */}
         <div className="mt-8 panel overflow-hidden">
-          <div className="flex items-center justify-between border-b border-white/5 px-6 py-4">
+          <div className="flex items-center justify-between border-b border-border px-6 py-4">
             <h3 className="text-sm font-semibold text-foreground">Live from Telegram</h3>
             {live && convos.length > 0 && (
               <span className="flex items-center gap-1.5 text-xs text-emerald-400">
@@ -238,7 +238,7 @@ export function Dashboard({ state }: { state: AppState }) {
                   {convos.map((c) => (
                     <tr
                       key={c.id}
-                      className="border-t border-white/5 transition-colors hover:bg-white/[0.02]"
+                      className="border-t border-border transition-colors hover:bg-secondary/60"
                     >
                       <td className="px-6 py-3 text-muted-foreground whitespace-nowrap">
                         {timeAgo(c.created_at)}
@@ -269,7 +269,7 @@ export function Dashboard({ state }: { state: AppState }) {
         {/* Live consult requests */}
         {consults.length > 0 && (
           <div className="mt-8 panel overflow-hidden border-emerald-500/20">
-            <div className="flex items-center justify-between border-b border-white/5 px-6 py-4">
+            <div className="flex items-center justify-between border-b border-border px-6 py-4">
               <div className="flex items-center gap-2">
                 <Video className="h-4 w-4 text-emerald-400" />
                 <h3 className="text-sm font-semibold text-foreground">Live consult requests</h3>
@@ -279,7 +279,7 @@ export function Dashboard({ state }: { state: AppState }) {
                 {consults.filter(c => c.status === "pending").length} pending
               </span>
             </div>
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-border">
               {consults.map((c) => (
                 <div key={c.id} className="flex items-center justify-between px-6 py-4">
                   <div className="min-w-0 flex-1">
@@ -324,7 +324,7 @@ export function Dashboard({ state }: { state: AppState }) {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 border-t border-white/5 pt-4 text-xs text-muted-foreground">
+            <p className="mt-5 border-t border-border pt-4 text-xs text-muted-foreground">
               RouteHealth runs on a schedule. It acts, it does not just answer.
             </p>
           </div>

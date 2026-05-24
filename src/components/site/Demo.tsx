@@ -169,7 +169,7 @@ export function Demo({ dispatch }: Props) {
                 className={`rounded-xl border px-4 py-2.5 text-sm font-medium transition-all ${
                   active
                     ? "border-primary/60 bg-primary/10 text-primary"
-                    : "border-white/10 bg-white/[0.03] text-foreground hover:border-white/25 hover:bg-white/[0.06]"
+                    : "border-border bg-secondary text-foreground hover:border-primary/40 hover:bg-secondary/80"
                 }`}
               >
                 {s.buttonLabel}

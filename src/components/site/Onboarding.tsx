@@ -31,13 +31,13 @@ export function Onboarding() {
             <input
               type="text"
               placeholder="TechMakers Sdn Bhd"
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-primary/60"
+              className="w-full rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-primary/60"
             />
           </Field>
 
           <Field label="Provider">
             <select
-              className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-primary/60"
+              className="w-full rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-primary/60"
               defaultValue={PROVIDERS[0]}
             >
               {PROVIDERS.map((p) => (
@@ -52,7 +52,7 @@ export function Onboarding() {
             <textarea
               rows={4}
               placeholder="Paste phone numbers, one per line"
-              className="w-full resize-none rounded-xl border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-primary/60"
+              className="w-full resize-none rounded-xl border border-border bg-secondary px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-primary/60"
             />
           </Field>
 
